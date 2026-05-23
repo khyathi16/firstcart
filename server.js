@@ -214,20 +214,7 @@ const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-app.post('/login', async (req, res) => {
 
-    const user = await User.findOne({
-        email: req.body.email,
-        password: req.body.password
-    });
-
-    if(user) {
-        res.send('Login Successful');
-    } else {
-        res.send('Invalid Email or Password');
-    }
-
-});
 app.post('/login', async (req, res) => {
 
     const { email, password } = req.body;
