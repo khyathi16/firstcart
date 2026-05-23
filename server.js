@@ -203,11 +203,39 @@ app.get('/add-saree', async (req, res) => {
 });
 app.post('/register', async (req, res) => {
 
-    const user = new User(req.body);
+    try {
 
-    await user.save();
+        console.log(req.body);
 
-    res.send('Registration Successful');
+        const user = new User({
+
+            username: req.body.username,
+
+            email: req.body.email,
+
+            password: req.body.password,
+
+            phone: "",
+            address: "",
+            city: "",
+            district: "",
+            pincode: "",
+            country: ""
+
+        });
+
+        await user.save();
+
+        res.send('Registration Successful');
+
+    }
+
+    catch(error) {
+
+        console.log(error);
+
+        res.send('Registration Failed');
+    }
 });
 const PORT = 3000;
 
