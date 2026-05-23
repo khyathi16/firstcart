@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Payment</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="login-form">
+
+            <h1>Select Payment Method</h1>
+
+            <button onclick="placeOrder('Cash On Delivery')">
+                Cash On Delivery
+            </button>
+
+            <button onclick="placeOrder('UPI Payment')">
+                UPI Payment
+            </button>
+
+            <button onclick="placeOrder('Credit/Debit Card')">
+                Credit / Debit Card
+            </button>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        async function placeOrder(method) {
+
+            const email =
+                localStorage.getItem('userEmail');
+
+            const cart =
+                JSON.parse(localStorage.getItem('cart'))
+                || [];
+
+            const response = await fetch('/place-order', {
+
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+                    email,
+                    cart,
+                    paymentMethod: method
+                })
+            });
+
+            const message = await response.text();
+
+           
+
+            localStorage.removeItem('cart');
+
+           window.location.href = 'success.html';
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Login</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <form id="loginForm" class="login-form">
+
+            <h1>Login</h1>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Email"
+                required
+            >
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                required
+            >
+
+            <button type="submit">
+                Login
+            </button>
+
+        </form>
+
+    </div>
+
+    <script>
+
+        document.getElementById('loginForm')
+
+        .addEventListener('submit', async (e) => {
+
+            e.preventDefault();
+
+            const loginData = {
+
+                email:
+                document.getElementById('email').value,
+
+                password:
+                document.getElementById('password').value
+            };
+
+            const response = await fetch('/login', {
+
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify(loginData)
+            });
+
+            const message = await response.text();
+
+            alert(message);
+
+            if(message === 'Login Successful') {
+
+            localStorage.setItem(
+        'userEmail',
+        loginData.email
+    );
+
+    window.location.href = 'profile.html';
+}
+
+        });
+
+    </script>
+
+</body>
+
+</html>

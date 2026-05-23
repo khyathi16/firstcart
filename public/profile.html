@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Address Details</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <form id="profileForm" class="login-form">
+
+            <h1>Delivery Address</h1>
+
+            <input
+                type="text"
+                id="phone"
+                placeholder="Phone Number"
+                required
+            >
+
+            <input
+                type="text"
+                id="address"
+                placeholder="Address"
+                required
+            >
+
+            <input
+                type="text"
+                id="city"
+                placeholder="City"
+                required
+            >
+
+            <input
+                type="text"
+                id="district"
+                placeholder="District"
+                required
+            >
+
+            <input
+                type="text"
+                id="pincode"
+                placeholder="Pincode"
+                required
+            >
+
+            <input
+                type="text"
+                id="country"
+                placeholder="Country"
+                required
+            >
+
+            <button type="submit">
+                Save Address
+            </button>
+
+        </form>
+
+    </div>
+
+    <script>
+
+        document.getElementById('profileForm')
+
+        .addEventListener('submit', async (e) => {
+
+            e.preventDefault();
+
+            const profileData = {
+
+                phone:
+                document.getElementById('phone').value,
+
+                address:
+                document.getElementById('address').value,
+
+                city:
+                document.getElementById('city').value,
+
+                district:
+                document.getElementById('district').value,
+
+                pincode:
+                document.getElementById('pincode').value,
+
+                country:
+                document.getElementById('country').value
+            };
+
+            const email =
+                localStorage.getItem('userEmail');
+
+            const response = await fetch('/save-profile', {
+
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+                    email,
+                    ...profileData
+                })
+            });
+
+            const message = await response.text();
+
+            alert(message);
+
+            window.location.href = '/';
+
+        });
+
+    </script>
+
+</body>
+
+</html>

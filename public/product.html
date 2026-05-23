@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Product Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="productDetails"></div>
+
+    <script>
+
+        const params = new URLSearchParams(window.location.search);
+
+        const productId = params.get('id');
+
+        async function fetchProduct() {
+
+            const response = await fetch('/products');
+
+            const products = await response.json();
+
+            const product = products.find(p => p._id === productId);
+
+            const detailsDiv =
+                document.getElementById('productDetails');
+
+            detailsDiv.innerHTML = `
+            
+            <div class="card">
+
+                <img src="${product.image}">
+
+                <h1>${product.name}</h1>
+
+                <h2>$${product.price}</h2>
+
+                <p>
+                    Amazing quality product from Trendora Store.
+                </p>
+
+                <button onclick='addToCart(${JSON.stringify(product)})'>
+                    Add To Cart
+                </button>
+                <button onclick="buyNow()">
+    Buy Now
+</button>
+            </div>
+            `;
+        }
+
+        function addToCart(product) {
+
+            let cart =
+                JSON.parse(localStorage.getItem('cart')) || [];
+
+            cart.push(product);
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            alert('Added To Cart');
+        }
+
+        fetchProduct();
+
+    </script>
+
+</body>
+
+</html>
