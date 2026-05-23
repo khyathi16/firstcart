@@ -217,21 +217,29 @@ app.listen(PORT, () => {
 
 app.post('/login', async (req, res) => {
 
-    const { email, password } = req.body;
+    try {
 
-    const user = await User.findOne({
-        email,
-        password
-    });
+        const user = await User.findOne({
+            email: req.body.email
+        });
 
-    if(user) {
+        if(!user) {
+            return res.send('User Not Found');
+        }
+
+        if(user.password !== req.body.password) {
+            return res.send('Wrong Password');
+        }
 
         res.send('Login Successful');
+
     }
 
-    else {
+    catch(error) {
 
-        res.send('Invalid Credentials');
+        console.log(error);
+
+        res.send('Login Failed');
     }
 });
 
