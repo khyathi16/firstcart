@@ -6,7 +6,7 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://pandu160207_db_user:x6tsE0FDai8TtETK@khyathi.zlgicuc.mongodb.net/?appName=Khyathi')
+mongoose.connect('mongodb+srv://pandu160207_db_user:x6tsE0FDai8TtETK@khyathi.zlgicuc.mongodb.net/firstcart?retryWrites=true&w=majority')
 .then(() => {
     console.log("MongoDB Connected");
 })
